@@ -1,43 +1,54 @@
-import _ from 'lodash'
 import React, { useState, useEffect } from 'react'
+import _ from 'lodash'
 
 const styles = {
 	mainContainer: {
 		border: '1px solid #999',
 		display: 'flex',
 		flexDirection: 'column',
-		// alignItems: 'center',
 		borderRadius: '3vw',
-		// justifyContent: 'space-around',
 		padding: '1.5vw',
 		height: '15vw',
 		width: '15vw',
 		margin: '1vw 0',
 	},
-	buttonContainer: {
-		width: '20%',
+	infoContainer: {
 		display: 'flex',
-		justifyContent: 'space-evenly'
+		flexDirection: 'column',
+		height: '12vw',
 	},
-	text: {
-		// width: '20%',
-		whiteSpace: 'nowrap',
-		textAlign: 'left',
-		overflow: 'hidden',
-		margin: '0.3vw 0',
-		textOverflow: 'ellipsis',
-	},
+	disable: {
+		cursor: 'cursor',
+		backgroundColor: '#EEE',
+	}
 }
 
 const RoomDisplay = (props) => {
-	const { room } = props
-	console.log("room", room)
+	const { room, onClick, selectedRoom } = props
+	const [reserve, setReserve] = useState(false)
+
+	useEffect(() => {
+		if (selectedRoom)
+			setReserve(selectedRoom.name === room.name)
+		else
+			setReserve(false)
+	}, [selectedRoom])
+
+	const onReserve = () => {
+		if (reserve)
+			return
+		onClick(room)
+	}
+
 	return (
-		<div style={styles.mainContainer}>
-			<span style={styles.text}>{room.name}</span>
-			<span style={styles.text}>{`Capacity : ${room.capacity} personne`}</span>
-			<span style={styles.text}>Equipement :</span>
-			{_.map(room.equipements, (equipment, index) => <span style={styles.text} key={index}>{`${index + 1} : ${equipment.name}`}</span>)}
+		<div style={styles.mainContainer} key={room.name} >
+			<div style={styles.infoContainer}>
+				<span className={'header textSpan'} >{room.name}</span>
+				<span className={'textSpan'} >{`Capacity : ${room.capacity} personne`}</span>
+				<span className={'textSpan'} >Equipement :</span>
+				{_.map(room.equipements, (equipment, index) => <span className={'textSpan'} key={index}>{`${index + 1} : ${equipment.name}`}</span>)}
+			</div>
+			<button className={'formButton'} style={reserve ? styles.disable : {}} type={'button'} text={'Play'} onClick={() => onReserve()} >{reserve ? 'Réservé': 'Réserve'}</button>
 		</div>
 	)
 }

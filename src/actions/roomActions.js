@@ -6,17 +6,3 @@ export const addRooms = (roomsData) => {
 		roomsData
 	}
 }
-
-export const deleteRoom = (roomToDelete) => {
-	return {
-		type: ROOM_ACTIONS.DELETE_ROOM,
-		roomToDelete
-	}
-}
-
-export const updateRoom = (updatedRoom) => {
-	return {
-		type: ROOM_ACTIONS.UPDATE_ROOM,
-		updatedRoom
-	}
-}
