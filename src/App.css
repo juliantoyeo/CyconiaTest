@@ -67,7 +67,6 @@ textarea, input, button, fieldset {
 }
 
 .standardForm {
-	width								: 100%;
 	display							: flex;
 	flex-direction			: column;
 	align-items					: center;
